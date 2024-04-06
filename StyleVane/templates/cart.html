@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% block title %}Home - My Website{% endblock %}
+
+{% block content %}
+
+<div class="hero-wrap hero-bread" style="background-image: url('/static/images/bg_6.jpg');">
+	<div class="container">
+		<div class="row no-gutters slider-text align-items-center justify-content-center">
+			<div class="col-md-9 ftco-animate text-center">
+				<p class="breadcrumbs"><span class="mr-2"><a href="">Home</a></span> <span>Cart</span></p>
+				<h1 class="mb-0 bread">My Cart</h1>
+			</div>
+		</div>
+	</div>
+</div>
+
+<section class="ftco-section ftco-cart">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-9 ftco-animate">
+				<div class="cart-list" style="box-shadow: 5px 5px 8px grey;">
+					{% if cart_items %}
+					<table class="table table-responsive">
+						<thead class="thead-primary">
+							<tr class="text-center">
+								<th>&nbsp;</th>
+								<th>&nbsp;</th>
+								<th>Product</th>
+								<th>Price</th>
+								<th>Quantity</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for cart_item in cart_items %}
+							<tr class="text-center">
+								<td class="product-remove"><a href="/remove_from_cart/{{cart_item.product.id}}"
+										style="box-shadow: 5px 5px 8px grey;"><span class="ion-ios-close"></span></a>
+								</td>
+
+								<td class="image-prod">
+									<div class="img"
+										style="background-image:url('{{ cart_item.product.product_image.url }}');box-shadow: 5px 5px 8px grey;">
+									</div>
+								</td>
+
+								<td class="product-name">
+									<h3>{{ cart_item.product.product_title }}</h3>
+									<p>Far far away, behind the word mountains, far from the countries</p>
+								</td>
+
+								<td class="price">{{ cart_item.product.product_price }}</td>
+
+								<td class="quantity">
+									<div class="input-group" style="width: 80px;">
+										<div class="input-group-prepend" style="width: 20px;">
+											<button class="btn btn-outline-secondary decrease-quantity" data-cart-item-id="{{ cart_item.id }}" style="width: 20px;background-color: #ffd6b6;">-</button>
+										</div>
+										<input type="number" id="quantity_{{ cart_item.id }}" class="form-control" value="{{ cart_item.quantity }}" min="1" max="100">
+										<div class="input-group-append" style="width: 20px;">
+											<button class="btn btn-outline-secondary increase-quantity" data-cart-item-id="{{ cart_item.id }}" style="width: 20px;background-color: #ffd6b6;">+</button>
+										</div>
+									</div>
+								</td>
+							</tr><!-- END TR-->
+							{% endfor %}
+						</tbody>
+					</table>
+					{% else %}
+					<div class="text-center">
+						<h3>Your cart is empty.</h3>
+						<img src="/static/images/emptycart.png" alt="..." class="img-fluid "
+							style="max-width: 30%;height: auto;">
+					</div>
+
+
+					{% endif %}
+				</div>
+			</div>
+			<!-- summary  -->
+			<div class="col col-md-3 cart-wrap ftco-animate">
+				<div class="cart-total mb-3" style="box-shadow: 5px 5px 8px grey;">
+				<div class="cart-total " style="background: black;text-align: center;
+				color: #fff;margin: -20px 0px 20px -20px;width: 119%;">
+					<span style="margin-right: 10px;">Cart Summary</span>
+					<a href="/view_cart"><img src="/static/images/refresh-26.png"></a>
+				</div>
+
+					<h3>Cart Totals</h3>
+					<p class="d-flex">
+						<span>Subtotal</span>
+						<span>${{ cart_subtotal }}</span>
+					</p>
+					<p class="d-flex">
+						<span>Delivery</span>
+						<span>$0.00</span>
+					</p>
+					<p class="d-flex">
+						<span>Discount</span>
+						<span>$0.00</span>
+					</p>
+
+					<hr>
+					<p class="d-flex total-price">
+						<span>Total</span>
+						<span>${{ cart_total }}</span>
+					</p>
+
+				</div>
+				<p class="text-center"><a href="/checkout" class="btn btn-primary py-3 px-4"
+						style="box-shadow: 5px 5px 8px grey;">Proceed to Checkout</a></p>
+			</div>
+		</div>
+		<!-- <div class="row justify-content-center">
+			
+		</div> -->
+	</div>
+</section>
+
+{% endblock %}
